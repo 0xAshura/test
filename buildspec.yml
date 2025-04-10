@@ -3,7 +3,7 @@ version: 0.2
 env:
   variables:
     AWS_DEFAULT_REGION: "ca-central-1"
-    REPOSITORY_URI: "345594584716.dkr.ecr.ca-central-1.amazonaws.com/test/uma-ecr"
+    REPOSITORY_URI: "180294199255.dkr.ecr.ca-central-1.amazonaws.com/test/mihir-ecr"
  
 phases:
   pre_build:

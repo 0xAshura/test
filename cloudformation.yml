@@ -179,10 +179,10 @@ Resources:
       NetworkMode: awsvpc
       RequiresCompatibilities:
         - FARGATE
-      ExecutionRoleArn: "arn:aws:iam::345594584716:role/codebuild-term-role"
+      ExecutionRoleArn: "arn:aws:iam::180294199255:role/WildRydesCodeBuildServiceRole"
       ContainerDefinitions:
-        - Name: uma-ecr
-          Image: "345594584716.dkr.ecr.ca-central-1.amazonaws.com/test/uma-ecr:latest"
+        - Name: mihir-ecr-ecr
+          Image: "180294199255.dkr.ecr.ca-central-1.amazonaws.com/test/mihir-ecr:latest"
           Essential: true
           PortMappings:
             - ContainerPort: !Ref ContainerPort
@@ -229,7 +229,7 @@ Resources:
   ECRRepository:
     Type: AWS::ECR::Repository
     Properties:
-      RepositoryName: test/uma-ecr
+      RepositoryName: test/mihir-ecr
       LifecyclePolicy:
         LifecyclePolicyText: |
           {
@@ -260,7 +260,7 @@ Resources:
     DependsOn: ECRRepository
     Properties:
       Name: WildRydesBuild
-      ServiceRole: "arn:aws:iam::345594584716:role/codebuild-term-role"
+      ServiceRole: "arn:aws:iam::180294199255:role/WildRydesCodeBuildServiceRole"
       Artifacts:
         Type: CODEPIPELINE
       Environment:
@@ -272,7 +272,7 @@ Resources:
           - Name: AWS_DEFAULT_REGION
             Value: "ca-central-1"
           - Name: REPOSITORY_URI
-            Value: "345594584716.dkr.ecr.ca-central-1.amazonaws.com/test/uma-ecr"
+            Value: "180294199255.dkr.ecr.ca-central-1.amazonaws.com/test/mihir-ecr"
       Source:
         Type: CODEPIPELINE
         BuildSpec: |
@@ -280,7 +280,7 @@ Resources:
           env:
             variables:
               AWS_DEFAULT_REGION: "ca-central-1"
-              REPOSITORY_URI: "345594584716.dkr.ecr.ca-central-1.amazonaws.com/test/uma-ecr"
+              REPOSITORY_URI: "180294199255.dkr.ecr.ca-central-1.amazonaws.com/test/mihir-ecr"
           phases:
             pre_build:
               commands:
@@ -315,7 +315,7 @@ Resources:
     Type: AWS::CodePipeline::Pipeline
     Properties:
       Name: WildRydesPipeline
-      RoleArn: "arn:aws:iam::345594584716:role/codebuild-term-role"
+      RoleArn: "arn:aws:iam::180294199255:role/WildRydesCodeBuildServiceRole"
       ArtifactStore:
         Type: S3
         Location: !Ref ArtifactBucket
